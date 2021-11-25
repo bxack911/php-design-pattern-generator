@@ -1,0 +1,58 @@
+<idea-plugin>
+    <id>design.patterns.plugin</id>
+    <name>Design Patterns</name>
+    <vendor email="orestes.polyzos@gmail.com" url="https://www.linkedin.com/in/orestes-polyzos/">Orestes Polyzos</vendor>
+
+    <description>
+        <![CDATA[
+            <h2>Provides on the fly implementation of various design patterns based on user's code</h2>
+            <p>More information can be found <a href="https://github.com/OrPolyzos/design-patterns-plugin">here</a>.</p>
+            <h3>Currently supported design patterns</h3>
+            <ul>
+                <li>Behavioral</li>
+                <ul>
+                    <li>Strategy</li>
+                </ul>
+                <li>Creational</li>
+                <ul>
+                    <li>Builder (Inner)</li>
+                    <li>Factory</li>
+                    <li>Singleton</li>
+                </ul>
+            </ul>
+        ]]>
+    </description>
+
+    <change-notes>
+        <![CDATA[
+            <ul>
+            <li>
+                <strong>2.0.4</strong>
+                    <ul>
+                        <li>Fixes NPE when caret is inside a .java file but outside of a Java Class</li>
+                        <li>Adds support for IntelliJ IDEA until build '193.*'</li>
+                    </ul>
+                </li>
+            </ul>
+        ]]>
+    </change-notes>
+
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.jetbrains.php</depends>
+
+    <actions>
+        <group id="design-patterns-group" text="Design Patterns" popup="true">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </group>
+        <action id="singletonDesignPattern" class="ore.plugins.idea.design.patterns.action.SingletonAction"
+                text="Singleton"
+                description="Implements singleton design pattern">
+            <add-to-group group-id="design-patterns-group" anchor="first"/>
+        </action>
+        <action id="strategyDesignPattern" class="ore.plugins.idea.design.patterns.action.StrategyAction"
+                text="Strategy"
+                description="Implements singleton design pattern">
+            <add-to-group group-id="design-patterns-group" anchor="after" relative-to-action="singletonDesignPattern"/>
+        </action>
+    </actions>
+</idea-plugin>
