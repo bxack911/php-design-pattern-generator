@@ -54,5 +54,10 @@
                 description="Implements singleton design pattern">
             <add-to-group group-id="design-patterns-group" anchor="after" relative-to-action="singletonDesignPattern"/>
         </action>
+        <action id="builderDesignPattern" class="ore.plugins.idea.design.patterns.action.BuilderAction"
+                text="Builder"
+                description="Implements builder design pattern">
+            <add-to-group group-id="design-patterns-group" anchor="after" relative-to-action="builderDesignPattern"/>
+        </action>
     </actions>
 </idea-plugin>

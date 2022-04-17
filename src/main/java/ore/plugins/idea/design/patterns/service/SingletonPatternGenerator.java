@@ -26,7 +26,6 @@ public class SingletonPatternGenerator extends JavaCodeGenerator {
         psiClass.addBefore(generateInstanceMethod(psiClass, instanceFieldName), psiClass.getLastChild());
     }
 
-
     private void deleteRelated(PhpClass psiClass, String instanceFieldName) {
         if (psiClass.getConstructor() != null) {
             psiClass.getConstructor().delete();
