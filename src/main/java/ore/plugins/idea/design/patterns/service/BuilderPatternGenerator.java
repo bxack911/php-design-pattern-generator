@@ -4,9 +4,11 @@ import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.jetbrains.php.lang.psi.PhpPsiElementFactory;
 import com.jetbrains.php.lang.psi.elements.*;
+import ore.plugins.idea.design.patterns.utils.PhpPsiClassGeneratorUtils;
 import ore.plugins.idea.lib.service.JavaCodeGenerator;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -111,7 +113,7 @@ public class BuilderPatternGenerator extends JavaCodeGenerator {
     }
 
     private PhpClass generateStuffForBuilderClass() {
-        PhpClass builderClass = generateBuilderClass();
+        PhpClass builderClass = (new PhpPsiClassGeneratorUtils(psiClass, this.psiPackageStatement, builderClassName)).generateClass(Collections.emptyList());
         generateBuilderFields(builderClass);
         builderClass.addBefore(generateBuilderConstructor(), builderClass.getLastChild());
         builderClass.addBefore(generateBuilderAccessMethod(), builderClass.getLastChild());
@@ -119,27 +121,6 @@ public class BuilderPatternGenerator extends JavaCodeGenerator {
         generateBuilderWithMethods(builderClass, includedFieldsWithoutMandatoryFields);
         builderClass.addBefore(generateBuildMethod(builderClass, includedFieldsWithoutMandatoryFields), builderClass.getLastChild());
         return builderClass;
-    }
-
-    private PhpClass generateBuilderClass() {
-        PhpClass phpClass = PhpPsiElementFactory.createPhpPsiFromText(psiClass.getProject(), PhpClass.class, "class " + builderClassName + " { }");
-        PsiFile interfaceFile = psiClass.getContainingFile().getContainingDirectory().createFile(builderClassName.concat(".php"));
-        interfaceFile.addAfter(PhpPsiElementFactory.createPhpPsiFromText(psiClass.getProject(), PhpPsiElement.class, "\nnamespace " + psiPackageStatement + ";\n\n"), interfaceFile.getFirstChild());
-        interfaceFile.addAfter(PhpPsiElementFactory.createWhiteSpace(psiClass.getProject()), interfaceFile.getLastChild());
-        interfaceFile.addAfter(phpClass, interfaceFile.getLastChild());
-        interfaceFile.addAfter(PhpPsiElementFactory.createWhiteSpace(psiClass.getProject()), interfaceFile.getLastChild());
-
-
-        for (int i = 0; i < 40; i++) {
-            PsiElement element = interfaceFile.findElementAt(i);
-            PhpClass psiClass = PsiTreeUtil.getParentOfType(element, PhpClass.class);
-
-            if (psiClass != null) {
-                return psiClass;
-            }
-        }
-
-        return phpClass;
     }
 
     private PhpClass generateBuilderFields(PhpClass builderClass) {

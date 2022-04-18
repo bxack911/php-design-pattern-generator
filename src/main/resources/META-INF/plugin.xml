@@ -59,5 +59,10 @@
                 description="Implements builder design pattern">
             <add-to-group group-id="design-patterns-group" anchor="after" relative-to-action="builderDesignPattern"/>
         </action>
+        <action id="factoryDesignPattern" class="ore.plugins.idea.design.patterns.action.FactoryAction"
+                text="Factory"
+                description="Implements factory design pattern">
+            <add-to-group group-id="design-patterns-group" anchor="after" relative-to-action="factoryDesignPattern"/>
+        </action>
     </actions>
 </idea-plugin>
